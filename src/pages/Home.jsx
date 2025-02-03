@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaUser } from "react-icons/fa";
 import Slider from '../components/Slider';
 import { MdOutlineFileDownload, MdOutlineFileUpload } from 'react-icons/md';
@@ -6,9 +6,14 @@ import { SiRemovedotbg } from 'react-icons/si';
 import { heroVid } from '../assets/assets';
 import Hero from "../components/Hero"
 import { useNavigate } from 'react-router';
+import { useAuth, useClerk } from '@clerk/clerk-react';
+import { IoIosArrowRoundForward } from 'react-icons/io';
 
 const Home = () => {
+    const { openSignIn } = useClerk()
+    const { isSignedIn } = useAuth();
     const navigate = useNavigate();
+
 
     const handleChange = (event) => {
         navigate("/remove", { state: { file: event.target.files[0] } })
@@ -115,8 +120,13 @@ const Home = () => {
 
                 <section className="flex flex-col items-center my-28">
                     <h2 className='bg-linear-90 from-[#353535] to-[#9B9B9B] text-transparent bg-clip-text md:text-3xl text-xl  font-semibold leading-normal text-center mb-8'>See the magic. Try now</h2>
-                    <label htmlFor='uploading' className='flex items-center gap-2 bg-linear-30 from-[#7648FF] to-[#D34AF8] text-white py-3 px-6 rounded-4xl cursor-pointer'><MdOutlineFileUpload className='text-2xl text-white' /> <span>Upload your image</span></label>
-                    <input type="file" id="uploading" className='hidden' onChange={(event) => handleChange(event)} />
+                    {isSignedIn ?
+                                    <>
+                                        <label htmlFor='uploading' className=' flex items-center gap-2 bg-linear-30 from-[#7648FF] to-[#D34AF8] text-white py-3 px-6 rounded-4xl cursor-pointer'><MdOutlineFileUpload className='text-2xl text-white' /> <span>Upload your image</span></label>
+                                        <input type="file" id="uploading" className='hidden' onChange={(event) => handleChange(event)} />
+                                    </>:
+                                    <button onClick={openSignIn} className='text-white text-sm px-7 py-3 rounded-3xl flex items-center gap-2 group transition-all ease-in-out cursor-pointer my-6 hover:text-gray-200 bg-linear-30 from-[#7648FF] to-[#D34AF8]'>Upload your image<IoIosArrowRoundForward className='text-xl group-hover:translate-x-2 transition-all ease-in-out' /></button>
+                                }
                 </section>
 
             </main>
