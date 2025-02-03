@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+
+body {
+    background: #f9fafc;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', serif;
+}
+
+
+.slider {
+    background: transparent;
+    height: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+
+}
+
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 30px;
+    min-height: 30px;
+    background: url(/src/assets/slider-icon.svg);
+    background-size: contain;
+}
+
+
+@theme {
+    --animate-wiggle: wiggle 1s ease-in-out infinite;
+    @keyframes wiggle {
+      0%,
+      100% {
+        scale:1.1;
+      }
+      50% {
+        scale:1;
+      }
+    }
+  }
+
